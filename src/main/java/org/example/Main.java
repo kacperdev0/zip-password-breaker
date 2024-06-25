@@ -12,9 +12,9 @@ import net.lingala.zip4j.exception.ZipException;
 public class Main {
     private static final ExecutorService executor = Executors.newFixedThreadPool( Runtime.getRuntime().availableProcessors() );
     private static final AtomicReference<String> found = new AtomicReference<>(null);
-    public static boolean checkIfPasswordIsRight(String password) {
+    public static boolean checkIfPasswordIsRight(String password, String path) {
         try {
-            ZipFile zip = new ZipFile("C:/Users/kacpe/Desktop/TopSecret.zip", password.toCharArray());
+            ZipFile zip = new ZipFile(path, password.toCharArray());
             if (zip.isEncrypted())
             {
                 zip.extractAll("/tmp");
@@ -26,10 +26,10 @@ public class Main {
         }
     }
 
-    public static void backtrack(String chars, String current, Integer maximalLen) {
+    public static void backtrack(String chars, String current, Integer maximalLen, String path) {
         System.out.println(current);
 
-        if (checkIfPasswordIsRight(current)) {
+        if (checkIfPasswordIsRight(current, path)) {
             found.set(current);
             executor.shutdownNow();
             return;
@@ -38,16 +38,14 @@ public class Main {
         if (current.length() < maximalLen && found.get() == null) {
             for (int i = 0; i < chars.length(); i++) {
                final String next = current + chars.charAt(i);
-               executor.execute(() -> backtrack(chars, next, maximalLen));
+               executor.execute(() -> backtrack(chars, next, maximalLen, path));
             }
         }
     }
 
-
-    public static void main(String[] args) {
-        System.out.println(checkIfPasswordIsRight("abc"));
-        backtrack("abcde", "", 8);
+    public static String checkAllCombinations(String chars, int maxLen, String path) {
+        backtrack(chars, "", maxLen, path);
         while (executor.isTerminated() == false) {}
-        System.out.println("Password is: " + found);
+        return found.toString();
     }
 }
