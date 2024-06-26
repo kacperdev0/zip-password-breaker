@@ -93,7 +93,10 @@ public class GUI {
         submit_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                result_Label.setText(Main.findCorrectPasswordInCombiantions("abcde", selectFile.getSelectedFile().getAbsolutePath(), Integer.parseInt(length_TextField.getText())));
+                String chars = chars_TextField.getText();
+                String path = selectFile.getSelectedFile().getAbsolutePath();
+                int maxLen = Integer.parseInt(length_TextField.getText());
+                Main.findPasswordInBackground(chars, path, maxLen, result_Label);
             }
         });
 
