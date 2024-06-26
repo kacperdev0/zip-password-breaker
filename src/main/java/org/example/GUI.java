@@ -60,11 +60,18 @@ public class GUI {
         gbc.gridwidth = 2;
         panel.add(length_TextField, gbc);
 
+        JLabel result_Label = new JLabel("");
+
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        gbc.gridwidth = 2;
+        panel.add(result_Label, gbc);
+
         JButton submit_Button = new JButton("Submit");
         submit_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(Main.checkAllCombinations("abcde", Integer.parseInt(length_TextField.getText()), selectFile.getSelectedFile().getAbsolutePath()));
+                result_Label.setText(Main.findCorrectPasswordInCombiantions("abcde", selectFile.getSelectedFile().getAbsolutePath(), Integer.parseInt(length_TextField.getText())));
             }
         });
 
