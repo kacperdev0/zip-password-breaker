@@ -10,7 +10,7 @@ import java.awt.event.ActionListener;
 public class GUI {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Zip Password Breaker");
-        frame.setSize(400, 300); // Adjusted size for better layout
+        frame.setSize(400, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel(new GridBagLayout());
@@ -22,7 +22,6 @@ public class GUI {
     }
 
     public static void placeComponents(JPanel panel) {
-        // Set up GridBagConstraints for layout management
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.insets = new Insets(10, 10, 10, 10);
@@ -73,13 +72,14 @@ public class GUI {
         panel.add(chars_Label, gbc);
 
         // Text field to input the characters to use
-        JTextField chars_TextField = new JTextField(20);
-        chars_TextField.setPreferredSize(new Dimension(200, 60));
-        chars_TextField.setText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
+        JTextArea chars_TextArea = new JTextArea();
+        chars_TextArea.setPreferredSize(new Dimension(200, 60));
+        chars_TextArea.setLineWrap(true);
+        chars_TextArea.setText("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789");
         gbc.gridx = 2;
         gbc.gridy = 2;
         gbc.gridwidth = 2;
-        panel.add(chars_TextField, gbc);
+        panel.add(chars_TextArea, gbc);
 
         // Label to display the result of the password search
         JLabel result_Label = new JLabel("");
@@ -93,7 +93,7 @@ public class GUI {
         submit_Button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String chars = chars_TextField.getText();
+                String chars = chars_TextArea.getText();
                 String path = selectFile.getSelectedFile().getAbsolutePath();
                 int maxLen = Integer.parseInt(length_TextField.getText());
                 Main.findPasswordInBackground(chars, path, maxLen, result_Label);
