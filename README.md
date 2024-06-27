@@ -1,7 +1,3 @@
-Certainly! Here's a simple README file for your GitHub repository based on the provided Java code for a "Zip Password Breaker" application using Swing and Zip4j library:
-
----
-
 # Zip Password Breaker
 
 This Java application allows you to brute-force crack the password of a ZIP file using a specified set of characters and maximum password length. It employs a Swing GUI for user interaction and utilizes the Zip4j library for ZIP file handling.
